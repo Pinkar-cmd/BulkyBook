@@ -9,6 +9,8 @@ using BulkyBook.DataAccess;
 using BulkyBook.DataAccess.Data;
 using BulkyBook.Repository.IRepository;
 using BulkyBook.Repository;
+using BulkyBook.Utility;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace BulkyBook
 {
@@ -27,12 +29,24 @@ namespace BulkyBook
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+            services.AddAuthentication().AddFacebook(options => {
+                options.AppId = "269721150889462";
+                options.AppSecret = "a5e3545aebe98fb8b5ee8374b6bb8120";
+            });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
