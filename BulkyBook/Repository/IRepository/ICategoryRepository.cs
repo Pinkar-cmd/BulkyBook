@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BulkyBook.Repository.IRepository
 {
-    public interface ICategoryRepository : IRepository<Category>
+    public interface ICategoryRepository : IRepositoryAsync<Category>
     {
         void Update(Category category);
     }
