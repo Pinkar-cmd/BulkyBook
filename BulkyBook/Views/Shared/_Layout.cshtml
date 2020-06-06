@@ -72,6 +72,12 @@
                                 }
                             </a>
                         </li>
+                        @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="BrainTree" asp-action="Index">BrainTree</a>
+                            </li>
+                        }
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShoppingCart) != null)
                         {
                             <li style="color:white;">
