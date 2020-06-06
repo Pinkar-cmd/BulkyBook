@@ -261,18 +261,18 @@ namespace BulkyBook.Areas.Customer.Controllers
         {
             OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id);
             TwilioClient.Init(_twilioOptions.AccountSid, _twilioOptions.AuthToken);
-           /* try
-            {*/
+            try
+            {
                 var message = MessageResource.Create(
                     body: "Order Placed on Bulky Book. Your Order ID:" + id,
                     from: new Twilio.Types.PhoneNumber(_twilioOptions.PhoneNumber),
                     to: new Twilio.Types.PhoneNumber(orderHeader.PhoneNumber)
                     );
-            //}
-            //catch (Exception ex)
-            //{
+            }
+            catch (Exception ex)
+            {
 
-            //}
+            }
             return View(id);
         }
     }
