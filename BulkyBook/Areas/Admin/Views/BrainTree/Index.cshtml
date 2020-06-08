@@ -22,7 +22,7 @@
 @section Scripts{
     <script src="https://js.braintreegateway.com/web/dropin/1.21.0/js/dropin.min.js"></script>
     <script>
-    var client_token = "@ViewBag.ClientToken";
+        var client_token = "@ViewBag.ClientToken";
     var form = document.querySelector('#payment-form');
     braintree.dropin.create({
         authorization: client_token,
